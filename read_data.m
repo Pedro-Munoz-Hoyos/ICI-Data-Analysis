@@ -68,7 +68,7 @@ u_smpl = hdf5read(hinfo.GroupHierarchy.Datasets(3));
 v_smpl = hdf5read(hinfo.GroupHierarchy.Datasets(4));
 
 
-%% INSTANTANEOUS VELOCITY PLOTS
+%% instantaneous velocity plots
 figure(1)
 hold on
 plot(x_smpl,u_smpl(1,:),':r',LineWidth=2)
@@ -82,11 +82,18 @@ set(gca,'TickLabelInterpreter','latex','FontSize',14)
 
 
 %% LORE IPSUM
+
+% Friction velocity (Obtained with the mean dwdx from task 5)
+u_t=0.062151316141519;
+
+% Reynolds number based on channel half height and friction velocity
+Re_t  =  u_t*delta/nu; 
+
 close all; clc;
-              [smpl_avg,smpl_std] = f_task3(u_smpl,v_smpl,w_smpl,x_smpl);
-[dwdx_avg,w_avg_anl,dwdx_avg_anl] = f_task5(smpl_avg(:,3),x_smpl);
-                    [F_FFT,U_FFT] = f_task6(u_smpl,t_smpl);
-            [smpl_skew,smpl_kurt] = f_task7(u_smpl,v_smpl,w_smpl,smpl_avg,smpl_std,x_smpl);
+[smpl_avg,smpl_std,fluctuations,TKE,TKE_avg] = f_task3(u_smpl,v_smpl,w_smpl,x_smpl,nu,u_t);
+           [dwdx_avg,w_avg_anl,dwdx_avg_anl,u_t] = f_task5(smpl_avg(:,3),x_smpl,nu);
+                               [F_FFT,U_FFT] = f_task6(u_smpl,t_smpl);
+                       [smpl_skew,smpl_kurt] = f_task7(u_smpl,fluctuations,smpl_std,x_smpl);
 
 
 

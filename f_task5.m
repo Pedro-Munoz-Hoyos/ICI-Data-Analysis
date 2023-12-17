@@ -1,7 +1,8 @@
-function [dwdx_avg,w_smpl_avg_anl,dwdx_avg_anl] = f_task5(w_smpl_avg,x_smpl)
+function [dwdx_avg,w_smpl_avg_anl,dwdx_avg_anl,u_t] = f_task5(w_smpl_avg,x_smpl,nu)
 
 % -------------------------------------------------------------------------
 dwdx_avg=gradient(w_smpl_avg)./gradient(x_smpl);
+u_t=sqrt(nu*dwdx_avg(1));
 % -------------------------------------------------------------------------
 w_smpl_avg_anl=poly2sym(polyfit(x_smpl,w_smpl_avg,22));
 dwdx_avg_anl=diff(w_smpl_avg_anl);
