@@ -81,7 +81,12 @@ legend('$u/u_b$','$v/u_b$','$w/u_b$',...
 set(gca,'TickLabelInterpreter','latex','FontSize',14)
 
 
-%% LORE IPSUM
+%% ASSIGNMENT CODE
+
+% The following code was written by Pedro Muñoz Hoyos as part of the Data
+% Analysis and Uncertainty assignment at Cranfield University. The
+% following functions solve one taks of the assignment each. The data
+% obtained from the literature is stored in the "Literature" folder.
 
 % Friction velocity (Obtained with the mean dwdx from task 5)
 u_t=0.062151316141519;
@@ -89,11 +94,14 @@ u_t=0.062151316141519;
 % Reynolds number based on channel half height and friction velocity
 Re_t  =  u_t*delta/nu; 
 
-close all; clc;
-[smpl_avg,smpl_std,fluctuations,TKE,TKE_avg] = f_task3(u_smpl,v_smpl,w_smpl,x_smpl,nu,u_t);
-           [dwdx_avg,w_avg_anl,dwdx_avg_anl,u_t] = f_task5(smpl_avg(:,3),x_smpl,nu);
-                               [F_FFT,U_FFT] = f_task6(u_smpl,t_smpl);
-                       [smpl_skew,smpl_kurt] = f_task7(u_smpl,fluctuations,smpl_std,x_smpl);
+% Non-dimensional wall-normal coordinate
+xplus=x_smpl*u_t/nu;
+
+% Tasks resolution
+     [smpl_avg,smpl_std,fluctuations] = f_task3(u_smpl,v_smpl,w_smpl,xplus,u_t);
+[dwdx_avg,w_avg_anl,dwdx_avg_anl,u_t] = f_task5(smpl_avg(:,3),x_smpl,nu);
+                        [F_FFT,U_FFT] = f_task6(u_smpl,smpl_avg(:,1),t_smpl);  
+              [smpl_skew,smpl_kurt,R] = f_task7(u_smpl,w_smpl,fluctuations,smpl_std,xplus);
 
 
 
